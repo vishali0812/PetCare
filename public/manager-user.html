@@ -1,0 +1,225 @@
+<html>
+
+<head>
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:200,300,400,500,600,700,800&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="css/animate.css">
+
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+
+
+    <link rel="stylesheet" href="css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="css/jquery.timepicker.css">
+
+    <link rel="stylesheet" href="css/flaticon.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/angular.min.js"></script>
+    <script>
+        var mymodule = angular.module("itsModule", []);
+        mymodule.controller("itsController", function ($scope, $http) {
+            //-------------------------------------------------------
+            $scope.showUsers = function () {
+                $http.get("/show-all-users").then(fxOk, fxNotOk);
+                function fxOk(response) {
+                    $scope.userArray = response.data;
+                }
+                function fxNotOk(response) {
+                    alert(response.data);
+                }
+            };
+            //-------------------------------------
+
+            $scope.blockUser = function (Email) {
+                $http.get("/block-user?Email=" + Email).then(fxOk, fxNotOk);
+                function fxOk(response) {
+                    $scope.showUsers();
+                }
+                function fxNotOk(response) {
+                    alert(response.data);
+                }
+            };
+            //----------------------------------------
+
+            $scope.activateUser = function (Email) {
+                $http.get("/activate-user?Email=" + Email).then(fxOk, fxNotOk);
+                function fxOk(response) {
+                    $scope.showUsers();
+                }
+                function fxNotOk(response) {
+                    alert(response.data);
+                }
+            }
+        });
+    </script>
+</head>
+
+<body ng-app="itsModule" ng-controller="itsController">
+
+    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar"
+        style="position: fixed;width: 100%;top: 0;">
+        <div class="container">
+            <a class="navbar-brand" href=""><span class="flaticon-pawprint-1 mr-2"></span>Manage Users</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
+                aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="fa fa-bars"></span> Menu
+            </button>
+            <div class="collapse navbar-collapse" id="ftco-nav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item"><a href="dash-admin.html" class="nav-link">DASHBOARD</a></li>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="extra bg-danger"></div>
+
+    <div class="container mt-3">
+        <div class="row">
+            <center>
+                <input type="button" value="Show All Users" class="btn btn-success" ng-click="showUsers();"
+                    style="margin-top:120px;">
+            </center>
+        </div>
+
+
+        <div class="row">
+            <table class="table table-dark table-striped mt-3  col-md-12" border="1">
+                <tr align="center">
+                    <th>S.No</th>
+                    <th>Email</th>
+                    <th>UserType</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+
+                <tr ng-repeat="row in userArray" align="center">
+                    <td>
+                        {{$index+1}}
+                    </td>
+
+                    <td>
+                        {{row.Email}}
+                    </td>
+
+                    <td>
+                        {{row.UserType}}
+                    </td>
+
+                    <td>
+                        {{row.status}}
+                    </td>
+
+                    <td>
+                        <div class="row">
+                            <input type="button" value="Block" class="btn btn-danger col-md-4 ml-auto"
+                                ng-click="blockUser(row.Email);">
+                            <input type="button" value="Activate" class="btn btn-success col-md-4 ml-auto mr-auto"
+                                ng-click="activateUser(row.Email);">
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="extraspace bg-light"></div>
+
+
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-lg-3 mb-4 mb-md-0">
+                    <h2 class="footer-heading">Petcare</h2>
+                    <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
+                    <ul class="ftco-footer-social p-0">
+                        <li class="ftco-animate"><a href="#" data-toggle="tooltip" data-placement="top"
+                                title="Twitter"><span class="fa fa-twitter"></span></a></li>
+                        <li class="ftco-animate"><a href="#" data-toggle="tooltip" data-placement="top"
+                                title="Facebook"><span class="fa fa-facebook"></span></a></li>
+                        <li class="ftco-animate"><a href="#" data-toggle="tooltip" data-placement="top"
+                                title="Instagram"><span class="fa fa-instagram"></span></a></li>
+                    </ul>
+                </div>
+
+                <div class="col-md-6 col-lg-3 mb-4 mb-md-0">
+                    <h2 class="footer-heading">Location</h2>
+                    <div class="block-21 mb-4 d-flex">
+                        <a class="img mr-4 rounded">
+                            <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3447.8807337916064!2d74.95013941511905!3d30.21195128182175!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391732a4f07278a9%3A0x4a0d6293513f98ce!2sBanglore%20Computer%20Education!5e0!3m2!1sen!2sin!4v1673849575769!5m2!1sen!2sin"
+                                width="200" height="130" style="border:0;" allowfullscreen="" loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </a>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-6 col-lg-3 mb-4 mb-md-0">
+                    <h2 class="footer-heading">Have a Questions?</h2>
+                    <div class="block-23 mb-3">
+                        <ul>
+                            <li><span class="icon fa fa-map"></span><span class="text">Bathinda</span></li>
+                            <li><a href="#"><span class="icon fa fa-phone"></span><span
+                                        class="text">+91-62807-38720</span></a></li>
+                            <li><a href="#"><span class="icon fa fa-paper-plane"></span><span
+                                        class="text">vishalibansal47@gmail</span></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-5">
+                <div class="col-md-12 text-center">
+
+                    <br>
+                    <p class="copyright">
+
+                        Copyright &copy;
+                        <script>document.write(new Date().getFullYear());</script> All rights reserved
+
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
+            <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
+            <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
+                stroke="#F96D00" />
+        </svg></div>
+
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-migrate-3.0.1.min.js"></script>
+
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.easing.1.3.js"></script>
+    <script src="js/jquery.waypoints.min.js"></script>
+    <script src="js/jquery.stellar.min.js"></script>
+    <script src="js/jquery.animateNumber.min.js"></script>
+    <script src="js/bootstrap-datepicker.js"></script>
+    <script src="js/jquery.timepicker.min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/jquery.magnific-popup.min.js"></script>
+    <script src="js/scrollax.min.js"></script>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+    <script src="js/google-map.js"></script>
+    <script src="js/main.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,273 @@
+<html>
+
+<head>
+  <title> Document</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:200,300,400,500,600,700,800&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <link rel="stylesheet" href="css/animate.css">
+
+  <link rel="stylesheet" href="css/owl.carousel.min.css">
+  <link rel="stylesheet" href="css/owl.theme.default.min.css">
+  <link rel="stylesheet" href="css/magnific-popup.css">
+
+
+  <link rel="stylesheet" href="css/bootstrap-datepicker.css">
+  <link rel="stylesheet" href="css/jquery.timepicker.css">
+
+  <link rel="stylesheet" href="css/flaticon.css">
+  <link rel="stylesheet" href="css/style.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    $(document).ready(function () {
+      $("#btnProfile").click(function () {
+        location.href = "profile-client.html";
+      })
+
+      $("#btnCaretaker").click(function () {
+        location.href = "find-caretaker.html";
+      })
+      //========================================================
+
+      $("#Form-npass").blur(function () {
+        var pass = $("#Form-npass").val();
+        var r = /(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/;
+        if (r.test(pass) == true) {
+          //alert("Ok");
+          $(this).css("border", "1px solid green");
+
+        }
+        else {
+          //alert("Invalid")   ;
+          $(this).css("border", "1px solid red");
+
+        }
+      });
+      //==================================================
+
+      $("#change-pass").click(function () {
+        var PEmail = $("#Form-email").val();
+        var Oldpass = $("#Form-opass").val();
+        var Newpass = $("#Form-npass").val();
+
+        var obj = {
+          type: "get",
+          url: "/change-c-password",
+          data: {
+            Email: PEmail,
+            oldpass: Oldpass,
+            newpass: Newpass
+          }
+        }
+
+        $.ajax(obj).done(function (RespJsonAry) {
+          alert(RespJsonAry);
+        }).fail(function (kuchErr) {
+          alert(kuchErr.toString());
+        });
+      });
+    });
+  </script>
+
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar"
+    style="position: fixed;width: 100%;top: 0;">
+    <div class="container">
+      <a class="navbar-brand" href=""><span class="flaticon-pawprint-1 mr-2"></span>Pet Care</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
+        aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="fa fa-bars"></span> Menu
+      </button>
+      <div class="collapse navbar-collapse" id="ftco-nav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item"><a href="index.html" class="nav-link">HOME</a></li>
+          <li class="nav-item"><a href="index.html" class="nav-link">LOGOUT</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero-wrap hero-wrap-2" style="background-image: url('images/bg_2.jpg');"
+    data-stellar-background-ratio="0.5">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row no-gutters slider-text align-items-end">
+        <div class="col-md-9 ftco-animate pb-5">
+          <h1 class="mb-0 bread">Client Dashboard</h1>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="media-body">
+      <div class="card" style="width: 18rem; margin-top: 150px;float:left;width:300px;">
+        <img src="pics/profile icon2.png" class="card-img-top" alt="...">
+        <button type="button" class="btn btn-danger" id="btnProfile"> Profile </button>
+      </div>
+    </div>
+
+    <div class="card" style="width:18rem; margin-top:150px;float:left;margin-left:60px;width:300px;">
+      <img src="pics/profile icon.png" class="card-img-top" alt="...">
+      <button type="button" class="btn btn-danger" id="btnCaretaker"> Find Care Taker </button>
+    </div>
+
+    <div class="card" style="width:18rem; margin-top:150px;float:left; margin-left:60px;width:300px;">
+      <img src="pics/setting icon.png" class="card-img-top" alt="...">
+      <button type="button" class="btn btn-danger" id="btnSetting" data-target="#changePwd" data-toggle="modal" href="">
+        Settings </button>
+    </div>
+
+    <form>
+      <div class="modal fade" id="changepwd" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content ">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5">Change Password</h1>
+              <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+              <div class="md-form mb-4">
+                <!--<i class="fas fa-envelope prefix grey-text"></i>!-->
+                <label data-error="wrong" data-success="right" for="defaultForm-email">Your email</label>
+                <input type="email" id="Form-email" name="emailpass" class="form-control validate">
+                <div id="err-Email" class=""></div>
+              </div>
+
+              <div class="md-form mb-4">
+                <!-- <i class="fas fa-lock prefix grey-text"></i>!-->
+                <label data-error="wrong" data-success="right" for="defaultForm-pass">Old Password</label>
+                <input type="password" id="Form-opass" name="opass" class="form-control validate">
+                <div id="err-Pass" class=""></div>
+              </div>
+
+              <div class="md-form mb-4">
+                <!--<i class="fas fa-lock prefix grey-text"></i>!-->
+                <label data-error="wrong" data-success="right" for="defaultForm-pass">New Password</label>
+                <input type="password" id="Form-npass" name="npass" class="form-control validate">
+                <div id="err-Pass" class=""></div>
+              </div>
+
+
+              <div style="padding:10px 0px 10px;">
+                <center>
+                  <button type="button" class="btn btn-primary mr-md-4 py-3 px-4" id="change-pass">Change Password
+                  </button>
+                </center>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="extraspace" style="height:100px"></div>
+
+  <!-- <footer class="footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 col-lg-3 mb-4 mb-md-0">
+          <h2 class="footer-heading">Petcare</h2>
+          <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
+          <ul class="ftco-footer-social p-0">
+            <li class="ftco-animate"><a href="#" data-toggle="tooltip" data-placement="top" title="Twitter"><span
+                  class="fa fa-twitter"></span></a></li>
+            <li class="ftco-animate"><a href="#" data-toggle="tooltip" data-placement="top" title="Facebook"><span
+                  class="fa fa-facebook"></span></a></li>
+            <li class="ftco-animate"><a href="#" data-toggle="tooltip" data-placement="top" title="Instagram"><span
+                  class="fa fa-instagram"></span></a></li>
+          </ul>
+        </div>
+
+        <div class="col-md-6 col-lg-3 mb-4 mb-md-0">
+          <h2 class="footer-heading">Location</h2>
+          <div class="block-21 mb-4 d-flex">
+            <a class="img mr-4 rounded">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3447.8807337916064!2d74.95013941511905!3d30.21195128182175!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391732a4f07278a9%3A0x4a0d6293513f98ce!2sBanglore%20Computer%20Education!5e0!3m2!1sen!2sin!4v1673849575769!5m2!1sen!2sin"
+                width="200" height="130" style="border:0;" allowfullscreen="" loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </a>
+
+          </div>
+
+        </div>
+
+        <div class="col-md-6 col-lg-3 mb-4 mb-md-0">
+          <h2 class="footer-heading">Have a Questions?</h2>
+          <div class="block-23 mb-3">
+            <ul>
+              <li><span class="icon fa fa-map"></span><span class="text">Bathinda</span></li>
+              <li><a href="#"><span class="icon fa fa-phone"></span><span class="text">+91-62807-38720</span></a></li>
+              <li><a href="#"><span class="icon fa fa-paper-plane"></span><span
+                    class="text">vishalibansal47@gmail</span></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-5">
+        <div class="col-md-12 text-center">
+
+          <br>
+          <p class="copyright">
+
+            Copyright &copy;
+            <script>document.write(new Date().getFullYear());</script> All rights reserved
+
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
+      <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
+      <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
+        stroke="#F96D00" />
+    crossorigin="anonymous"></script> 
+    </svg></div>-->
+
+
+  <script src="js/jquery.min.js"></script>
+  <script src="js/jquery-migrate-3.0.1.min.js"></script>
+
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/jquery.easing.1.3.js"></script>
+  <script src="js/jquery.waypoints.min.js"></script>
+  <script src="js/jquery.stellar.min.js"></script>
+  <script src="js/jquery.animateNumber.min.js"></script>
+  <script src="js/bootstrap-datepicker.js"></script>
+  <script src="js/jquery.timepicker.min.js"></script>
+  <script src="js/owl.carousel.min.js"></script>
+  <script src="js/jquery.magnific-popup.min.js"></script>
+  <script src="js/scrollax.min.js"></script>
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+  <script src="js/google-map.js"></script>
+  <script src="js/main.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"></script>
+
+
+</body>
+
+</html>

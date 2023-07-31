@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Pet Care</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="css/style.css">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:200,300,400,500,600,700,800&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <link rel="stylesheet" href="css/animate.css">
+
+  <link rel="stylesheet" href="css/owl.carousel.min.css">
+  <link rel="stylesheet" href="css/owl.theme.default.min.css">
+  <link rel="stylesheet" href="css/magnific-popup.css">
+
+
+  <link rel="stylesheet" href="css/bootstrap-datepicker.css">
+  <link rel="stylesheet" href="css/jquery.timepicker.css">
+
+  <link rel="stylesheet" href="css/flaticon.css">
+  <link rel="stylesheet" href="css/style.css">
+  <!-- <link rel="stylesheet" href="css/style.scss"> -->
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
+  <script src="js/index.js"></script>
+  <script>
+
+    $(document).ready(function () {
+
+      $("#btnSignup").click(function () {
+        var Email = $("#txtEmails").val();
+        var Pwd = $("#txtPwds").val();
+
+        var Type = "";
+        if ($("#radClient").prop("checked") == true) {
+          Type = "Client";
+        }
+        else if ($("#radCaretaker").prop("checked") == true) {
+          Type = "Care Taker";
+        }
+
+        var obj = {
+          type: "get",
+          url: "/db-signup",
+          data: {
+            email: Email,
+            pwd: Pwd,
+            type: Type,
+          }
+        }
+
+        $.ajax(obj).done(function (msg) {
+          $("#Signupline").html(msg);
+        }).fail(function (msgerr) {
+          $("#Signupline").html(msgerr);
+        })
+
+      });
+      //---------------------------------------------------
+      $("#btnLogin").click(function () {
+        var Email = $("#txtEmaill").val();
+        var Pwd = $("#txtPwdl").val();
+
+        var obj = {
+          type: "get",
+          url: "/db-login",
+          data: {
+            email: Email,
+            pwd: Pwd,
+          }
+        }
+
+        $.ajax(obj).done(function (response) {
+
+          //localStorage.setItem("activeUser",Email);
+          alert(response);
+          if (response == "Client Logined") {
+            location.href = 'dash-client.html';
+          }
+          else if (response == "Care Taker Logined") {
+            location.href = 'dash-care-taker.html';
+          }
+          else {
+            $("#Loginline").html("Please Check Your Email Id");
+          }
+
+        }).fail(function (msgerr) {
+          $("#Loginline").html(msgerr);
+        })
+
+      })
+
+    });
+
+  </script>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 d-flex align-items-center">
+          <p class="mb-0 phone pl-md-2">
+            <a href="#" class="mr-2"><span class="fa fa-phone mr-1"></span> +91-62807-38720</a>
+            <a href="#"><span class="fa fa-paper-plane mr-1"></span>vishalibansal47@gmail.com</a>
+          </p>
+        </div>
+
+        <div class="col-md-6 d-flex justify-content-md-end">
+          <div class="social-media">
+            <p class="mb-0 d-flex">
+              <a href="#" class="d-flex align-items-center justify-content-center"><span class="fa fa-facebook"><i
+                    class="sr-only">Facebook</i></span></a>
+              <a href="#" class="d-flex align-items-center justify-content-center"><span class="fa fa-twitter"><i
+                    class="sr-only">Twitter</i></span></a>
+              <a href="#" class="d-flex align-items-center justify-content-center"><span class="fa fa-instagram"><i
+                    class="sr-only">Instagram</i></span></a>
+              <a href="#" class="d-flex align-items-center justify-content-center"><span class="fa fa-dribbble"><i
+                    class="sr-only">Dribbble</i></span></a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar"
+    style="position: fixed;width: 100%;top: 0;">
+    <div class="container">
+      <a class="navbar-brand" href=""><span class="flaticon-pawprint-1 mr-2"></span>Pet Care</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
+        aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="fa fa-bars"></span> Menu
+      </button>
+      <div class="collapse navbar-collapse" id="ftco-nav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+          <li class="nav-item"><a href="#services" class="nav-link">Services</a></li>
+          <li class="nav-item"><a href="#gallery" class="nav-link">Gallery</a></li>
+          <li class="nav-item"><a href="#team" class="nav-link">Team</a></li>
+          <li class="nav-item"><a href="dash-admin.html" class="nav-link">Admin</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
+  <form>
+    <div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="Signupline" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="Signupline">Fill your details below</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+
+          <div class="modal-body">
+            <div class="form-floating mb-3">
+              <input type="email" class="form-control" id="txtEmails" name="Email" placeholder="name@example.com"
+                required>
+              <label for="txtEmails">Email address</label>
+              <div id="errEmail" class=""></div>
+            </div>
+
+            <div class="form-floating mb-3">
+              <input type="password" class="form-control" id="txtPwds" name="Password" placeholder="Password" required>
+              <label for="txtPwds">Password</label>
+              <div id="errPass" class=""></div>
+            </div>
+
+            <div class="form-floating">
+              <h6>Type:</h6>
+              <div class="form-check" style="float: left;margin-left: 90px;">
+                <input class="form-check-input" type="radio" name="Type" id="radClient">
+                <label class="form-check-label" for="radClient">
+                  Client
+                </label>
+              </div>
+
+              <div class="form-check" style="float: right;margin-right: 90px;">
+                <input class="form-check-input" type="radio" name="Type" id="radCaretaker">
+                <label class="form-check-label" for="radCaretaker">
+                  Care Taker
+                </label>
+              </div>
+            </div>
+
+          </div>
+
+          <div style="padding: 10px 0px 10px">
+            <center>
+              <form class="d-flex" role="search">
+                <input class="btn btn-success" type="button" id="btnSignup" value="Signup">
+              </form>
+            </center>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <form>
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="Loginline" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="Loginline">Welcome Back</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+
+          <div class="modal-body">
+
+            <div class="form-floating mb-3">
+              <input type="email" class="form-control" id="txtEmaill" name="loginEmail" placeholder="name@example.com"
+                required>
+              <label for="txtEmaill">Email address</label>
+              <div id="err-Email" class=""></div>
+            </div>
+
+            <div class="form-floating mb-3">
+              <input type="password" class="form-control" id="txtPwdl" name="Password" placeholder="Password" required>
+              <label for="txtPwdl">Password</label>
+              <div id="err-Pass" class=""></div>
+            </div>
+
+
+          </div>
+
+          <div style="padding: 10px 0px 10px">
+            <center>
+              <input type="button" class="btn btn-success" value="Login" id="btnLogin" onclick="fetchlogin();">
+            </center>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <!-- template-------------------------------------------------------------------------------------------- -->
+
+  <!-- END nav     data-stellar-background-ratio="0.5"-->
+  <div class="hero-wrap js-fullheight" style="background-image: url(pics/pets.jpg);height:1000px ">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center"
+        data-scrollax-parent="true">
+        <div class="col-md-11 ftco-animate text-center">
+          <br>
+          <h1 class="mb-4">Highest Quality Care For Pets <br> You'll Love</h1>
+
+          <button class="btn btn-primary mr-md-4 py-3 px-4" type="button" data-bs-toggle="modal"
+            data-bs-target="#loginModal" style="margin-left:10px;">Login</button>
+
+          <button class="btn btn-primary mr-md-4 py-3 px-4" type="button" data-bs-toggle="modal"
+            data-bs-target="#signupModal" style="margin-left:10px;">Signup</button>
+
+
+          <!-- <p><a href="#" class="btn btn-primary mr-md-4 py-3 px-4">Learn more <span
+								class="ion-ios-arrow-forward"></span></a></p> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <section class="ftco-section bg-light ftco-no-pt ftco-intro mt-5" id="services">
+    <div class="container">
+      <br><br>
+      <div class="row justify-content-center pb-5 mb-3">
+        <div class="col-md-7 heading-section text-center ftco-animate">
+          <h2>Our Services</h2>
+        </div>
+      </div><br><br><br>
+      <div class="row">
+        <div class="col-md-4 d-flex align-self-stretch px-4 ftco-animate">
+          <div class="d-block services text-center">
+            <div class="icon d-flex align-items-center justify-content-center">
+              <span class="flaticon-blind"></span>
+            </div>
+
+            <div class="media-body">
+              <h3 class="heading">Pet Sitting</h3>
+              <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,
+                there live the blind texts. Separated they live in Bookmarksgrove right.</p>
+              <a href="#" class="btn-custom d-flex align-items-center justify-content-center"><span
+                  class="fa fa-chevron-right"></span><i class="sr-only">Read more</i></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 d-flex align-self-stretch px-4 ftco-animate">
+          <div class="d-block services text-center">
+            <div class="icon d-flex align-items-center justify-content-center">
+              <span class="flaticon-dog-eating"></span>
+            </div>
+            <div class="media-body">
+              <h3 class="heading">24x7 Available</h3>
+              <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,
+                there live the blind texts. Separated they live in Bookmarksgrove right.</p>
+              <a href="#" class="btn-custom d-flex align-items-center justify-content-center"><span
+                  class="fa fa-chevron-right"></span><i class="sr-only">Read more</i></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 d-flex align-self-stretch px-4 ftco-animate">
+          <div class="d-block services text-center">
+            <div class="icon d-flex align-items-center justify-content-center">
+              <span class="flaticon-grooming"></span>
+            </div>
+
+            <div class="media-body">
+              <h3 class="heading">Door To Door Services</h3>
+              <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,
+                there live the blind texts. Separated they live in Bookmarksgrove right.</p>
+              <a href="#" class="btn-custom d-flex align-items-center justify-content-center"><span
+                  class="fa fa-chevron-right"></span><i class="sr-only">Read more</i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ftco-section ftco-no-pt ftco-no-pb mt-5">
+    <div class="container">
+      <div class="row d-flex no-gutters">
+        <div class="col-md-5 d-flex">
+          <div
+            class="img img-video d-flex align-self-stretch align-items-center justify-content-center justify-content-md-center mb-4 mb-sm-0"
+            style="background-image:url(pics/images/about-1.jpg);">
+          </div>
+        </div>
+
+        <div class="col-md-7 pl-md-5 py-md-5">
+          <div class="heading-section pt-md-5">
+            <h2 class="mb-4">Why Choose Us?</h2>
+          </div>
+          <div class="row">
+            <div class="col-md-6 services-2 w-100 d-flex">
+              <div class="icon d-flex align-items-center justify-content-center"><span
+                  class="flaticon-stethoscope"></span></div>
+              <div class="text pl-3">
+                <h4>Care Advices</h4>
+              </div>
+            </div>
+
+            <div class="col-md-6 services-2 w-100 d-flex">
+              <div class="icon d-flex align-items-center justify-content-center"><span
+                  class="flaticon-customer-service"></span></div>
+              <div class="text pl-3">
+                <h4>Customer Supports</h4>
+
+              </div>
+            </div>
+
+            <div class="col-md-6 services-2 w-100 d-flex">
+              <div class="icon d-flex align-items-center justify-content-center"><span
+                  class="flaticon-emergency-call"></span></div>
+              <div class="text pl-3">
+                <h4>Emergency Services</h4>
+
+              </div>
+            </div>
+
+            <div class="col-md-6 services-2 w-100 d-flex">
+              <div class="icon d-flex align-items-center justify-content-center"><span
+                  class="flaticon-veterinarian"></span></div>
+              <div class="text pl-3">
+                <h4>Veterinary Help</h4>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ftco-counter" id="section-counter">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 col-lg-3 d-flex justify-content-center counter-wrap ftco-animate">
+          <div class="block-18 text-center">
+            <div class="text">
+              <strong class="number" data-number="10000">0</strong>
+            </div>
+
+            <div class="text">
+              <span>Clients</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3 d-flex justify-content-center counter-wrap ftco-animate">
+          <div class="block-18 text-center">
+            <div class="text">
+              <strong class="number" data-number="100">0</strong>
+            </div>
+
+            <div class="text">
+              <span>Caretakers</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3 d-flex justify-content-center counter-wrap ftco-animate">
+          <div class="block-18 text-center">
+            <div class="text">
+              <strong class="number" data-number="20">0</strong>
+            </div>
+
+            <div class="text">
+              <span>Services</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3 d-flex justify-content-center counter-wrap ftco-animate">
+          <div class="block-18 text-center">
+            <div class="text">
+              <strong class="number" data-number="20000">0</strong>
+            </div>
+
+            <div class="text">
+              <span>Pets Hosted</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ftco-section" id="gallery">
+    <div class="container">
+      <div class="row justify-content-center pb-5 mb-3">
+        <div class="col-md-7 heading-section text-center ftco-animate">
+          <h2>Gallery</h2>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4 ftco-animate">
+          <div class="work mb-4 img d-flex align-items-end" style="background-image: url(pics/images/gallery-1.jpg);">
+            <a href="pics/images/gallery-1.jpg"
+              class="icon image-popup d-flex justify-content-center align-items-center">
+              <span class="fa fa-expand"></span>
+            </a>
+            <div class="desc w-100 px-4">
+              <div class="text w-100 mb-3">
+                <span>Cat</span>
+                <h2><a href="work-single.html">Persian Cat</a></h2>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 ftco-animate">
+          <div class="work mb-4 img d-flex align-items-end" style="background-image: url(pics/images/gallery-2.jpg );">
+            <a href="images/gallery-2.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
+              <span class="fa fa-expand"></span>
+            </a>
+            <div class="desc w-100 px-4">
+              <div class="text w-100 mb-3">
+                <span>Dog</span>
+                <h2><a href="work-single.html">Pomeranian</a></h2>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 ftco-animate">
+          <div class="work mb-4 img d-flex align-items-end" style="background-image: url(pics/images/gallery-3.jpg);">
+            <a href="pics/images/gallery-3.jpg"
+              class="icon image-popup d-flex justify-content-center align-items-center">
+              <span class="fa fa-expand"></span>
+            </a>
+            <div class="desc w-100 px-4">
+              <div class="text w-100 mb-3">
+                <span>Cat</span>
+                <h2><a href="work-single.html">Sphynx Cat</a></h2>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 ftco-animate">
+          <div class="work mb-4 img d-flex align-items-end" style="background-image: url(pics/images/gallery-4.jpg);">
+            <a href="pics/images/gallery-4.jpg"
+              class="icon image-popup d-flex justify-content-center align-items-center">
+              <span class="fa fa-expand"></span>
+            </a>
+            <div class="desc w-100 px-4">
+              <div class="text w-100 mb-3">
+                <span>Cat</span>
+                <h2><a href="work-single.html">British Shorthair</a></h2>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 ftco-animate">
+          <div class="work mb-4 img d-flex align-items-end" style="background-image: url(pics/images/gallery-5.jpg);">
+            <a href="pics/images/gallery-5.jpg"
+              class="icon image-popup d-flex justify-content-center align-items-center">
+              <span class="fa fa-expand"></span>
+            </a>
+            <div class="desc w-100 px-4">
+              <div class="text w-100 mb-3">
+                <span>Dog</span>
+                <h2><a href="work-single.html">Beagle</a></h2>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 ftco-animate">
+          <div class="work mb-4 img d-flex align-items-end" style="background-image: url(pics/images/gallery-6.jpg);">
+            <a href="pics/images/gallery-6.jpg"
+              class="icon image-popup d-flex justify-content-center align-items-center">
+              <span class="fa fa-expand"></span>
+            </a>
+            <div class="desc w-100 px-4">
+              <div class="text w-100 mb-3">
+                <span>Dog</span>
+                <h2><a href="work-single.html">Pug</a></h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ftco-section bg-light" id="team">
+    <div class="container">
+      <div class="row justify-content-center pb-5 mb-3">
+        <div class="col-md-7 heading-section text-center ftco-animate">
+          <h2>Our Team</h2>
+        </div>
+      </div>
+
+      <div class="row d-flex">
+        <div class="col-md-4 offset-md-2 d-flex ftco-animate">
+          <div class="blog-entry align-self-stretch">
+            <a href="blog-single.html" class="block-20 rounded" style="background-image: url('pics/vishali.jpeg');">
+            </a>
+            <div class="text p-4">
+              <h4>Developed By</h4>
+              <h3 class="heading">Vishali Bansal</h3>
+              <h3 class="heading">vishalibansal47@gmail.com</h3>
+              <h3 class="heading">+91-62807-38720</h3>
+
+
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 d-flex ftco-animate">
+          <div class="blog-entry align-self-stretch">
+            <a href="blog-single.html" class="block-20 rounded" style="background-image: url('pics/sir.jpg');">
+            </a>
+            <div class="text p-4">
+
+              <h4>Under the guidance of</h4>
+              <h3 class="heading">Rajesh K.Bansal</h3>
+              <h3 class="heading">Banglore Computer Education</h3>
+              <h3 class="heading">+91-98722-46056</h3>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <footer class="footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 col-lg-3 mb-4 mb-md-0">
+          <h2 class="footer-heading">Petcare</h2>
+          <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
+          <ul class="ftco-footer-social p-0">
+            <li class="ftco-animate"><a href="#" data-toggle="tooltip" data-placement="top" title="Twitter"><span
+                  class="fa fa-twitter"></span></a></li>
+            <li class="ftco-animate"><a href="#" data-toggle="tooltip" data-placement="top" title="Facebook"><span
+                  class="fa fa-facebook"></span></a></li>
+            <li class="ftco-animate"><a href="#" data-toggle="tooltip" data-placement="top" title="Instagram"><span
+                  class="fa fa-instagram"></span></a></li>
+          </ul>
+        </div>
+
+        <div class="col-md-6 col-lg-3 mb-4 mb-md-0">
+          <h2 class="footer-heading">Location</h2>
+          <div class="block-21 mb-4 d-flex">
+            <a class="img mr-4 rounded">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3447.8807337916064!2d74.95013941511905!3d30.21195128182175!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391732a4f07278a9%3A0x4a0d6293513f98ce!2sBanglore%20Computer%20Education!5e0!3m2!1sen!2sin!4v1673849575769!5m2!1sen!2sin"
+                width="200" height="130" style="border:0;" allowfullscreen="" loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </a>
+
+          </div>
+
+        </div>
+
+        <div class="col-md-6 col-lg-3 mb-4 mb-md-0">
+          <h2 class="footer-heading">Have a Questions?</h2>
+          <div class="block-23 mb-3">
+            <ul>
+              <li><span class="icon fa fa-map"></span><span class="text">Bathinda</span></li>
+              <li><a href="#"><span class="icon fa fa-phone"></span><span class="text">+91-62807-38720</span></a></li>
+              <li><a href="#"><span class="icon fa fa-paper-plane"></span><span
+                    class="text">abhishakk724@gmail</span></a></li>
+
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-5">
+        <div class="col-md-12 text-center">
+
+          <br>
+          <p class="copyright">
+
+            Copyright &copy;
+            <script>document.write(new Date().getFullYear());</script> All rights reserved
+
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
+      <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
+      <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
+        stroke="#F96D00" />
+    </svg></div>
+
+
+  <script src="js/jquery.min.js"></script>
+  <script src="js/jquery-migrate-3.0.1.min.js"></script>
+
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/jquery.easing.1.3.js"></script>
+  <script src="js/jquery.waypoints.min.js"></script>
+  <script src="js/jquery.stellar.min.js"></script>
+  <script src="js/jquery.animateNumber.min.js"></script>
+  <script src="js/bootstrap-datepicker.js"></script>
+  <script src="js/jquery.timepicker.min.js"></script>
+  <script src="js/owl.carousel.min.js"></script>
+  <script src="js/jquery.magnific-popup.min.js"></script>
+  <script src="js/scrollax.min.js"></script>
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+  <script src="js/google-map.js"></script>
+  <script src="js/main.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+    crossorigin="anonymous"></script>
+
+
+
+</body>
+
+</html>
