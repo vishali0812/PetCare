@@ -28,18 +28,18 @@ app.get("/admin", function (req, resp) {
 })
 //==================================================
 //Dtabase Connectivity
-// var dbConfigurationObj = {
-//     host: "localhost",
-//     user: "root",
-//     password: "",
-//     database: "project"
-// };
 var dbConfigurationObj = {
-    host: "bl0ugpsjwn6sgoom2hlu-mysql.services.clever-cloud.com",
-    user: "udymwxfj5mf7ksdj",
-    password: "Td0zIB1UfKjTxXVkQaiW",
-    database: "bl0ugpsjwn6sgoom2hlu"
+    host: "localhost",
+    user: "root",
+    password: "",
+    database: "project"
 };
+// var dbConfigurationObj = {
+//     host: "bdky7jufzyf77kd4slz6-mysql.services.clever-cloud.com",
+//     user: "ufwsefowzdk5a2ga",
+//     password: "b17FxqzJtNCZBMZeZzBU",
+//     database: "bdky7jufzyf77kd4slz6"
+// };
 //==================================================
 
 var dbRef = mysql.createConnection(dbConfigurationObj);
